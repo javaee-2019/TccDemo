@@ -1,0 +1,151 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:service-clientA}
+  datasource:
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    url: ${DB_URL:jdbc:mysql://192.168.10.196:10001/txlcn-demo?useUnicode=true&characterEncoding=utf8&useSSL=false}
+    druid:
+      filters: stat,wall        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 1
+      min-idle: 1
+      max-active: 30
+      max-wait: 10000
+      time-between-eviction-runs-millis: 20000        # 配置一个连接在池中生存的时间，单位是毫秒
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 5000
+          merge-sql: true
+      max-pool-prepared-statement-per-connection-size: 20
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # statViewServlet配置
+      stat-view-servlet:
+        # 是否启用statViewServlet配置
+        enabled: ${DRUID_STAT_VIEW_SERVLET_ENABLED:true}
+        # 访问监控页面
+        url-pattern: ${DRUID_STAT_VIEW_SERVLET_URL:/druid/*}
+        # 禁止手动重置监控数据
+        reset-enable: ${DRUID_STAT_VIEW_SERVLET_RESET:false}
+        # 设置监控页面的登陆名
+        login-username: ${DRUID_STAT_VIEW_SERVLET_USERNAME:admin}
+        # 设置监控页面的登陆密码
+        login-password: ${DRUID_STAT_VIEW_SERVLET_PASSWORD:admin}
+      #WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter:
+        # 是否启用WebStatFilter
+        enabled: ${DRUID_WEB_STAT_FILTER:true}
+        # 访问路径
+        url-pattern: ${DRUID_WEB_STAT_URL:/*}
+        # 排除不必要的url
+        exclusions: ${DRUID_WEB_STAT_EXCLUSIONS:*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*}
+        # 是否启用session的统计功能
+        session-stat-enable: ${DRUID_WEB_STAT_SESSION_ENABLE:true}
+        # 监控最大session数，默认是1000
+        session-stat-max-count: ${DRUID_WEB_STAT_MAX_SESSION:1000}
+        # 是否启用监控单个Url调用的sql列表
+        profile-enable: ${DRUID_WEB_STAT_PROFILE_ENABLE:true}
+        # 使druid当前session的用户是谁，session_user_key是你保存到session中的sessionName
+        principalSessionName: ${DRUID_WEB_STAT_PRINCIPALSESSIONNAME:session_user_key}
+        # 使druid只当当前的user是谁,cookie_user_key是你保存在cookie中的cookieName
+        principalCookieName: ${DRUID_WEB_STAT_PRINCIPALCOOKIENAME:cookie_user_key}
+  servlet:
+    multipart:
+      max-file-size: ${SERVLET_MULTIPART_MAX_FILE_SIZE:5MB}
+      max-request-size: ${SERVLET_MULTIPART_MAX_REQUEST_SIZE:10MB}
+  # 统一utf8 编码
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+mybatis:
+  configuration:
+    # mybatis 下划线转驼峰配置,两者都可以
+    map-underscore-to-camel-case: true
+    # 获取数据库自增主键值 -->
+    use-generated-keys: true
+    # 使用列别名替换列名，默认为 true
+    use-column-label: true
+  type-aliases-package: com.sensin.tcc.model
+  #  xml文件所在位置
+  mapper-locations: classpath:mapper/*.xml
+  #通用mapper的所在接口名称 不只是包名
+  mappers: com.sensin.common.base.mybatis.MyMapper
+  identity: MYSQL
+
+#pagehelper分页
+pagehelper:
+  reasonable: false
+  support-methods-arguments: true
+  offset-as-page-num: true
+  row-bounds-with-count: true
+  page-size-zero: true
+
+# 启用hystrix熔断
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          # hystrix的thread隔离策略，设置为该值可以获取到当前请求线程
+          strategy: SEMAPHORE
+          thread:
+            # Hystrix超时时间，熔断时间应当大于ribbon的读取时间+连接时间
+            timeoutInMilliseconds: 3000
+          semaphore:
+            # 允许到HystrixCommand.run()方法的最大请求数
+            maxConcurrentRequests: 100
+      circuitBreaker:
+        # 当在配置时间窗口内达到此数量的失败后，进行短路，控制单个请求方法窗口时间（见metrics.rollingStats.timeInMilliseconds）内的最大请求数
+        requestVolumeThreshold: 200
+        # 短路多久以后开始尝试是否恢复
+        sleepWindowInMilliseconds: 1
+        # 出错百分比阈值，当达到此阈值后，开始短路
+        errorThresholdPercentage: 50
+      fallback:
+        isolation:
+          semaphore:
+            # 并发最大处理的限制
+            maxConcurrentRequests: 50
+      metrics:
+        rollingStats:
+          # 设置统计滚动窗口的持续时间（以毫秒为单位）
+          timeInMilliseconds: 10000
+          # 设置rollingstatistical窗口划分的桶数。
+          # 以下必须为true - “metrics.rollingStats.timeInMilliseconds%metrics.rollingStats.numBuckets == 0” -否则将抛出异常。
+          numBuckets: 10
+ribbon:
+  # 处理时间
+  ReadTimeout: 1000
+  # 连接时间
+  ConnectTimeout: 1000
+  # 最大自动重试次数
+  MaxAutoRetries: 0
+  # 换实例重试次数
+  MaxAutoRetriesNextServer: 1
+  # 最大http连接数
+  MaxTotalHttpConnections: 1000
+  # 每个host连接数
+  MaxConnectionsPerHost: 500
+server:
+  port: ${SERVER_PORT:8080}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${DISCOVER_URL:http://sensin:offer@127.0.0.1:21001/eureka/}
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}-${eureka.instance.ip-address}:${server.port}
+    ip-address: ${INSTANCE_IP_ADDRESS:127.0.0.1}
