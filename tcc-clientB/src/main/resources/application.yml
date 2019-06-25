@@ -14,7 +14,7 @@ spring:
   datasource:
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:root}
-    url: ${DB_URL:jdbc:mysql://192.168.10.196:10001/txlcn-demo?useUnicode=true&characterEncoding=utf8&useSSL=false}
+    url: ${DB_URL:jdbc:mysql://192.168.10.196:10001/txlcn-demo2?useUnicode=true&characterEncoding=utf8&useSSL=false}
     druid:
       filters: stat,wall        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
       driver-class-name: com.mysql.jdbc.Driver
