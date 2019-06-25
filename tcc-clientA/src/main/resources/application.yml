@@ -163,3 +163,13 @@ eureka:
 tx-lcn:
   client:
     manager-address: ${TX_LCN_CLIENT_MANAGER_ADDRESS:127.0.0.1:8070}
+  logger:
+    password: ${TXLCN_LOGGER_PASSWORD:root}
+    username: ${TXLCN_LOGGER_USERNAME:root}
+    jdbc-url: ${TXLCN_LOGGER_URL:jdbc:mysql://192.168.10.196:10001/tx-logger?characterEncoding=UTF-8}
+    driver-class-name: ${spring.datasource.druid.driver-class-name}
+    enabled: true
+  message:
+    netty:
+      #      重连次数 设置为最大值 保证lcn服务端重启 不需要重启客户端(默认8次)
+      reconnect-count: 2147483647
