@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.sensin.build</groupId>
+        <artifactId>spring-build-parent</artifactId>
+        <version>2.0</version>
+        <relativePath/>
+    </parent>
+    <properties>
+        <codingapi.txlcn.version>5.0.2.RELEASE</codingapi.txlcn.version>
+    </properties>
+    <groupId>com.sensin.tcc</groupId>
+    <artifactId>component-txmanager</artifactId>
+
+    <name>component-txmanager</name>
+    <description>TCC-DEMO</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-tc</artifactId>
+            <version>${codingapi.txlcn.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-tm</artifactId>
+            <version>${codingapi.txlcn.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-txmsg-netty</artifactId>
+            <version>${codingapi.txlcn.version}</version>
+        </dependency>
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${springcloud.openfeign.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>component-txmanager</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

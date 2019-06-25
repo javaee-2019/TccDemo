@@ -7,5 +7,5 @@ import java.util.List;
 public interface TDemoService {
     List<TDemo> list();
 
-    int add(String appName);
+    int add(String appName,boolean throwExp);
 }

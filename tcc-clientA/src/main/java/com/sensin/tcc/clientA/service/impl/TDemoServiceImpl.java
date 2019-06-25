@@ -29,10 +29,12 @@ public class TDemoServiceImpl implements TDemoService {
 
     @Override
     @LcnTransaction//表明使用lcn模式
-    public int add(String appName) {
+    public int add(String appName, boolean throwExp) {
         clientBFeignService.add(appName);
         addByName(appName + "333");
-        int i = 1 / 0;
+        if (throwExp) {
+            int i = 1 / 0;
+        }
         return 0;
     }
 

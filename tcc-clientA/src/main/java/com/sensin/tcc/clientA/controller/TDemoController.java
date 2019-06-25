@@ -26,7 +26,13 @@ public class TDemoController {
 
     @RequestMapping("/add")
     public ResultDTO add(String appName) {
-        tDemoService.add(appName);
+        tDemoService.add(appName, true);
+        return ResultDTO.success();
+    }
+
+    @RequestMapping("/add2")
+    public ResultDTO add2(String appName) {
+        tDemoService.add(appName, false);
         return ResultDTO.success();
     }
 }
