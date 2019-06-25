@@ -1,9 +1,8 @@
 package com.sensin.tcc.clientA.model;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
+
 /**
 *
 *  @author author
@@ -48,7 +47,7 @@ public class TDemo implements Serializable {
     * 
     * isNullAble:1
     */
-    private java.time.LocalDateTime createTime;
+    private Date createTime;
 
 
     public void setId(Long id){this.id = id;}
@@ -71,9 +70,9 @@ public class TDemo implements Serializable {
 
     public String getAppName(){return this.appName;}
 
-    public void setCreateTime(java.time.LocalDateTime createTime){this.createTime = createTime;}
+    public void setCreateTime(Date createTime){this.createTime = createTime;}
 
-    public java.time.LocalDateTime getCreateTime(){return this.createTime;}
+    public Date getCreateTime(){return this.createTime;}
     @Override
     public String toString() {
         return "TDemo{" +
@@ -444,7 +443,7 @@ public class TDemo implements Serializable {
         }
 
 
-        public QueryBuilder createTime(java.time.LocalDateTime createTime){
+        public QueryBuilder createTime(Date createTime){
             setCreateTime(createTime);
             return this;
         }
@@ -800,7 +799,7 @@ public class TDemo implements Serializable {
             this.obj.setAppName(appName);
             return this;
         }
-        public Builder createTime(java.time.LocalDateTime createTime){
+        public Builder createTime(Date createTime){
             this.obj.setCreateTime(createTime);
             return this;
         }

@@ -23,4 +23,10 @@ public class TDemoController {
     public ResultDTO list() {
         return ResultDTO.success(tDemoService.list());
     }
+
+    @RequestMapping("/add")
+    public ResultDTO add(String appName) {
+        tDemoService.add(appName);
+        return ResultDTO.success();
+    }
 }

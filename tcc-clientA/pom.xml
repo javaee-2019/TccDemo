@@ -90,11 +90,31 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--LCN-->
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-tc</artifactId>
+            <version>5.0.2.RELEASE</version>
+        </dependency>
+
 <!--        <dependency>
             <groupId>com.codingapi.txlcn</groupId>
             <artifactId>txlcn-tm</artifactId>
             <version>5.0.2.RELEASE</version>
         </dependency>-->
+
+        <dependency>
+            <groupId>com.codingapi.txlcn</groupId>
+            <artifactId>txlcn-txmsg-netty</artifactId>
+            <version>5.0.2.RELEASE</version>
+        </dependency>
+        <!--LCN-->
+        <!--openfeign-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${springcloud.openfeign.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

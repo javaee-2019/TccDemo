@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TDemoService {
     List<TDemo> list();
+
+    int add(String appName);
 }

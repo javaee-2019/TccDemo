@@ -1,6 +1,16 @@
 spring:
   application:
-    name: ${APPLICATION_NAME:service-clientA}
+    name: ${APPLICATION_NAME:service-clientB}
+  #mq 集群配置 ip1:port1,ip2:port2
+  rabbitmq:
+    addresses: ${MQ_ADDRESSES:192.168.10.196:10025,192.168.10.196:10026,192.168.10.196:10027}
+    #    默认rabbitmq 账户-密码 guest-guest
+    username: ${MQ_USERNAME:guest}
+    password: ${MQ_PASSWORD:guest}
+  redis:
+    host: 192.168.10.196
+    port: 10030
+    database: 0
   datasource:
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:root}

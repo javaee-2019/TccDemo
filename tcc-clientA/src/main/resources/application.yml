@@ -1,6 +1,17 @@
+
 spring:
   application:
     name: ${APPLICATION_NAME:service-clientA}
+  #mq 集群配置 ip1:port1,ip2:port2
+  rabbitmq:
+    addresses: ${MQ_ADDRESSES:192.168.10.196:10025,192.168.10.196:10026,192.168.10.196:10027}
+    #    默认rabbitmq 账户-密码 guest-guest
+    username: ${MQ_USERNAME:guest}
+    password: ${MQ_PASSWORD:guest}
+  redis:
+    host: 192.168.10.196
+    port: 10030
+    database: 0
   datasource:
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:root}
@@ -72,7 +83,7 @@ mybatis:
     use-generated-keys: true
     # 使用列别名替换列名，默认为 true
     use-column-label: true
-  type-aliases-package: com.sensin.tcc.model
+  type-aliases-package: com.sensin.tcc.clientA.model
   #  xml文件所在位置
   mapper-locations: classpath:mapper/*.xml
   #通用mapper的所在接口名称 不只是包名
@@ -149,3 +160,6 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.application.name}-${eureka.instance.ip-address}:${server.port}
     ip-address: ${INSTANCE_IP_ADDRESS:127.0.0.1}
+tx-lcn:
+  client:
+    manager-address: 127.0.0.1:8070
