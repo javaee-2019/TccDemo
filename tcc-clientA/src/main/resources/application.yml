@@ -8,6 +8,17 @@ spring:
     #    默认rabbitmq 账户-密码 guest-guest
     username: ${MQ_USERNAME:guest}
     password: ${MQ_PASSWORD:guest}
+#    消息发送到交换机 确认机制,是否确认回调
+    publisher-confirms: true
+    #    消息发送到交换机 确认机制,是否返回回调
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 100
+        retry:
+          enabled: true
   redis:
     host: 192.168.10.196
     port: 10030
